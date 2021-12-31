@@ -50,6 +50,7 @@ var (
 	procFillConsoleOutputCharacter  = kernel32.NewProc("FillConsoleOutputCharacterW")
 	procFillConsoleOutputAttribute  = kernel32.NewProc("FillConsoleOutputAttribute")
 	procScrollConsoleScreenBuffer   = kernel32.NewProc("ScrollConsoleScreenBufferW")
+	var cutNewlineReplacer = strings.NewReplacer("\r", "", "\n", "")
 )
 
 type wchar uint16
