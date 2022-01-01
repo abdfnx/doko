@@ -3,10 +3,16 @@ package stream
 import (
 	"os"
 	"io"
+	"log"
+	"time"
 	"sync"
 	"errors"
+	"context"
 
+	"github.com/abdfnx/doko/shared"
 	logger "github.com/abdfnx/doko/log"
+
+	"github.com/docker/docker/api/types"
 )
 
 var (
@@ -44,4 +50,38 @@ func (s *Streamer) SetRawTerminal() (func(), error) {
 	}
 
 	return restore, nil
+}
+
+func (s *Streamer) resizeTTY(ctx context.Context, resize ResizeContainer, id string) error {
+	h, w := s.Out.GetTtySize()
+	if h == 0 && w == 0 {
+		return ErrTtySizeIsZero
+	}
+
+	options := types.ResizeOptions{
+		Height: h,
+		Width:  w,
+	}
+
+	return resize(ctx, id, options)
+}
+
+func (s *Streamer) initTTYSize(ctx context.Context, resize ResizeContainer, id string) {
+	if err := s.resizeTty(ctx, resize, id); err != nil {
+		go func() {
+			shared.Logger.Errorf("failed to resize tty: (%s)\n", err)
+
+			for retry := 0; retry < 5; retry++ {
+				time.Sleep(10 * time.Millisecond)
+
+				if err = s.resizeTty(ctx, resize, id); err == nil {
+					break
+				}
+			}
+
+			if err != nil {
+				log.Println("failed to resize tty, using default size")
+			}
+		}()
+	}
 }
