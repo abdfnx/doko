@@ -14,6 +14,7 @@ type dockerResources struct {
 	networks   []*network
 	volumes    []*volume
 	containers []*container
+	tasks      []*task
 }
 
 type state struct {
@@ -28,4 +29,17 @@ type UI struct {
 	app   *tview.Application
 	pages *tview.Pages
 	state *state
+}
+
+func newState() *state {
+	return &state{
+		stopChans: make(map[string]chan int),
+	}
+}
+
+func New() *UI {
+	return &UI{
+		app:   tview.NewApplication(),
+		state: newState(),
+	}
 }
