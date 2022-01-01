@@ -13,6 +13,7 @@ type dockerResources struct {
 	images     []*image
 	networks   []*network
 	volumes    []*volume
+	containers []*container
 }
 
 type state struct {
