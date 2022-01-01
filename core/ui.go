@@ -9,9 +9,17 @@ type panels struct {
 	panel        []panel
 }
 
+type dockerResources struct {
+	images     []*image
+	networks   []*network
+	volumes    []*volume
+}
+
 type state struct {
-	panels    panels
-	navigate  *navigate
+	panels          panels
+	navigate        *navigate
+	dockerResources dockerResources
+	stopChans 		map[string]chan int
 }
 
 // UI struct have all `doko` panels
