@@ -64,7 +64,7 @@ func (c *containers) setKeybinding(ui *UI) {
 				ui.removeContainer()
 			case 'r':
 				ui.renameContainerForm()
-			case 'u':
+			case 't':
 				ui.startContainer()
 			case 's':
 				ui.stopContainer()
