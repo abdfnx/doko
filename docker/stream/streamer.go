@@ -12,6 +12,7 @@ import (
 	"github.com/abdfnx/doko/shared"
 	logger "github.com/abdfnx/doko/log"
 
+	"github.com/docker/docker/pkg/term"
 	"github.com/docker/docker/api/types"
 )
 
@@ -84,4 +85,31 @@ func (s *Streamer) initTTYSize(ctx context.Context, resize ResizeContainer, id s
 			}
 		}()
 	}
+}
+
+func (s *Streamer) streamIn(restore func(), resp types.HijackedResponse) <-chan struct{} {
+	done := make(chan struct{})
+
+	go func() {
+		defer close(done)
+
+		_, err := io.Copy(resp.Conn, s.In)
+
+		restore()
+
+		if _, ok := err.(term.EscapeError); ok {
+			return
+		}
+
+		if err != nil {
+			shared.Logger.Errorf("in stream error: %s", err)
+			return
+		}
+
+		if err := resp.CloseWrite(); err != nil {
+			shared.Logger.Errorf("close response error: %s", err)
+		}
+	}()
+
+	return done
 }
