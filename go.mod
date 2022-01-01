@@ -8,6 +8,7 @@ require (
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
 	github.com/rivo/tview v0.0.0-20211202162923-2a6de950f73b
 	github.com/sirupsen/logrus v1.8.1
+	golang.org/x/term v0.0.0-20210220032956-6a3ed077a48d
 )
 
 require (
@@ -33,7 +34,6 @@ require (
 	github.com/rivo/uniseg v0.2.0 // indirect
 	golang.org/x/net v0.0.0-20210226172049-e18ecbb05110 // indirect
 	golang.org/x/sys v0.0.0-20210616094352-59db8d763f22 // indirect
-	golang.org/x/term v0.0.0-20210220032956-6a3ed077a48d // indirect
 	golang.org/x/text v0.3.6 // indirect
 	golang.org/x/time v0.0.0-20211116232009-f0f3c7e86c11 // indirect
 	google.golang.org/genproto v0.0.0-20201110150050-8816d57aaa9a // indirect
