@@ -9,7 +9,7 @@ type panels struct {
 	panel        []panel
 }
 
-type dockerResources struct {
+type resources struct {
 	images     []*image
 	networks   []*network
 	volumes    []*volume
@@ -20,7 +20,7 @@ type dockerResources struct {
 type state struct {
 	panels          panels
 	navigate        *navigate
-	dockerResources dockerResources
+	resources resources
 	stopChans 		map[string]chan int
 }
 
