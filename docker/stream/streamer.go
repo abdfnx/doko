@@ -113,3 +113,53 @@ func (s *Streamer) streamIn(restore func(), resp types.HijackedResponse) <-chan 
 
 	return done
 }
+
+func (s *Streamer) streamOut(restore func(), resp types.HijackedResponse) <-chan error {
+	done := make(chan error, 1)
+
+	go func() {
+		_, err := io.Copy(s.Out, resp.Reader)
+
+		restore()
+
+		if err != nil {
+			shared.Logger.Errorf("output stream error: %s", err)
+			return
+		}
+
+		done <- err
+	}()
+
+	return done
+}
+
+func (s *Streamer) stream(ctx context.Context, resp types.HijackedResponse) error {
+	// set raw mode
+	restore, err := s.SetRawTerminal()
+	if err != nil {
+		return err
+	}
+
+	defer restore()
+
+	// start stdin/stdout stream
+	outDone := s.streamOut(restore, resp)
+	inDone := s.streamIn(restore, resp)
+
+	select {
+		case err := <-outDone:
+			return err
+
+		case <-inDone:
+			select {
+				case err := <-outDone:
+					return err
+
+				case <-ctx.Done():
+					return ctx.Err()
+			}
+
+		case <-ctx.Done():
+			return ctx.Err()
+	}
+}
