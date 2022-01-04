@@ -59,7 +59,6 @@ func NewDocker(config *ClientConfig) *Docker {
 		return &Docker{client}
 	}
 
-	// default api version 1.39
 	client, err := client.NewClientWithOpts(client.WithHost(config.endpoint), client.WithVersion(config.apiVersion))
 	if err != nil {
 		panic(err)

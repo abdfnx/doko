@@ -42,6 +42,15 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 		Example: heredoc.Doc(`
 			# Open doko
 			doko
+
+			# With specific endpoint
+			doko --endpoint <DOCKER_ENDPOINT>
+
+			# Use another docker api version
+			doko --api "1.39"
+
+			# Log file path
+			doko --log-file /home/doko/my-log.log
 		`),
 		Annotations: map[string]string{
 			"help:tellus": heredoc.Doc(`
@@ -69,7 +78,7 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 				tview.Borders.BottomRightFocus = '+'
 			}
 
-			logger.NewLogger(string(dokoOpts.LogFilePath), string(dokoOpts.LogLevelPath))
+			logger.NewLogger(string(dokoOpts.LogLevelPath), string(dokoOpts.LogFilePath))
 
 			docker.NewDocker(
 				docker.NewClientConfig(
@@ -125,12 +134,12 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 
 	// add flags
 	rootCmd.Flags().StringVarP(&dokoOpts.Endpoint, "endpoint", "e", client.DefaultDockerHost, "The docker endpoint to use")
-	rootCmd.Flags().StringVarP(&dokoOpts.CertPath, "cert", "c", "", "The path to the TLS certificate")
-	rootCmd.Flags().StringVarP(&dokoOpts.KeyPath, "key", "k", "", "The path to the TLS key")
-	rootCmd.Flags().StringVarP(&dokoOpts.CaPath, "ca", "", "", "The path to the TLS CA")
-	rootCmd.Flags().StringVarP(&dokoOpts.ApiVersion, "api", "a", "", "The docker api version")
-	rootCmd.Flags().StringVarP(&dokoOpts.LogFilePath, "logfile", "l", "", "The path to the log file")
-	rootCmd.Flags().StringVarP(&dokoOpts.LogLevelPath, "loglevel", "o", "info", "The log level")
+	rootCmd.Flags().StringVarP(&dokoOpts.CertPath, "cert", "c", "", "The path to the TLS certificate (cert.pem)")
+	rootCmd.Flags().StringVarP(&dokoOpts.KeyPath, "key", "k", "", "The path to the TLS key (key.pem)")
+	rootCmd.Flags().StringVarP(&dokoOpts.CaPath, "ca", "", "", "The path to the TLS CA (ca.pem)")
+	rootCmd.Flags().StringVarP(&dokoOpts.ApiVersion, "api", "a", "1.41", "The docker api version")
+	rootCmd.Flags().StringVarP(&dokoOpts.LogFilePath, "log-file", "l", "", "The path to the log file")
+	rootCmd.Flags().StringVarP(&dokoOpts.LogLevelPath, "log-level", "o", "info", "The log level")
 
 	return rootCmd
 }
