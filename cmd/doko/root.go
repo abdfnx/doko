@@ -1,23 +1,24 @@
 package doko
 
 import (
-	"os"
-	"fmt"
 	"context"
+	"fmt"
+	"os"
 	"runtime"
 
-	"github.com/abdfnx/doko/log"
-	"github.com/abdfnx/doko/core"
-	"github.com/abdfnx/doko/tools"
-	"github.com/abdfnx/doko/docker"
-	"github.com/abdfnx/doko/core/opts"
+	"github.com/abdfnx/doko/cli"
 	"github.com/abdfnx/doko/cmd/factory"
+	"github.com/abdfnx/doko/core"
+	"github.com/abdfnx/doko/core/opts"
+	"github.com/abdfnx/doko/docker"
+	"github.com/abdfnx/doko/log"
+	"github.com/abdfnx/doko/tools"
 
-	"github.com/rivo/tview"
-	"github.com/spf13/cobra"
-	"github.com/mattn/go-runewidth"
 	"github.com/MakeNowJust/heredoc"
 	"github.com/docker/docker/client"
+	"github.com/mattn/go-runewidth"
+	"github.com/rivo/tview"
+	"github.com/spf13/cobra"
 )
 
 var dokoOpts = &opts.Options{
@@ -133,7 +134,7 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 	rootCmd.SetFlagErrorFunc(rootFlagErrorFunc)
 
 	// add `versionCmd` to root command
-	rootCmd.AddCommand(versionCmd)
+	rootCmd.AddCommand(cli.SettingsCMD(), versionCmd)
 
 	// add flags
 	rootCmd.Flags().StringVarP(&dokoOpts.Endpoint, "endpoint", "e", client.DefaultDockerHost, "The docker endpoint to use")
