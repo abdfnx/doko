@@ -1,0 +1,9 @@
+Welcome to Doko 🐋
+
+you can do your first steps
+
+- `$ doko`
+- `$ doko --log-file /home/doko-user/my-log.log`
+- `$ doko --engine "1.40"`
+
+run `doko -h` for get help 📄
