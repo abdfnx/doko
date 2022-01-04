@@ -48,17 +48,17 @@ func newDockerInfo() *dockerInfo {
 		return nil
 	}
 
-	var apiVersion string
+	var engineVersion string
 	if v, err := docker.Client.ServerVersion(context.TODO()); err != nil {
-		apiVersion = ""
+		engineVersion = ""
 	} else {
-		apiVersion = v.APIVersion
+		engineVersion = v.APIVersion
 	}
 
 	return &dockerInfo{
 		HostName:      info.Name,
 		ServerVersion: info.ServerVersion,
-		APIVersion:    apiVersion,
+		APIVersion:    engineVersion,
 		KernelVersion: info.KernelVersion,
 		OSType:        info.OSType,
 		Architecture:  info.Architecture,
@@ -82,10 +82,10 @@ func newInfo() *info {
 }
 
 func (i *info) display() {
-	dockerAPI := fmt.Sprintf("api version:%s", i.Docker.APIVersion)
+	dockerEngine := fmt.Sprintf("engine version:%s", i.Docker.APIVersion)
 	dockerVersion := fmt.Sprintf("server version:%s", i.Docker.ServerVersion)
 	dockerEndpoint := fmt.Sprintf("endpoint:%s", i.Docker.Endpoint)
 
 	i.SetTextColor(tcell.ColorYellow)
-	i.SetText(fmt.Sprintf(" docker\t| %s %s %s", dockerAPI, dockerVersion, dockerEndpoint))
+	i.SetText(fmt.Sprintf(" docker\t| %s %s %s", dockerEngine, dockerVersion, dockerEndpoint))
 }

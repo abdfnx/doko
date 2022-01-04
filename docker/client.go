@@ -16,28 +16,28 @@ type Docker struct {
 
 // ClientConfig docker client config
 type ClientConfig struct {
-	endpoint   string
-	certPath   string
-	keyPath    string
-	caPath     string
-	apiVersion string
+	endpoint      string
+	certPath      string
+	keyPath       string
+	caPath        string
+	engineVersion string
 }
 
 // NewClientConfig create docker client config
-func NewClientConfig(endpoint, cert, key, ca, apiVersion string) *ClientConfig {
+func NewClientConfig(endpoint, cert, key, ca, engineVersion string) *ClientConfig {
 	return &ClientConfig{
 		endpoint:   endpoint,
 		certPath:   cert,
 		keyPath:    key,
 		caPath:     ca,
-		apiVersion: apiVersion,
+		engineVersion: engineVersion,
 	}
 }
 
 // NewDocker create new docker client
 func NewDocker(config *ClientConfig) *Docker {
 	if os.Getenv("DOCKER_HOST") != "" {
-		client, err := client.NewClientWithOpts(client.FromEnv, client.WithVersion(config.apiVersion))
+		client, err := client.NewClientWithOpts(client.FromEnv, client.WithVersion(config.engineVersion))
 		if err != nil {
 			panic(err)
 		}
@@ -50,7 +50,7 @@ func NewDocker(config *ClientConfig) *Docker {
 		config.keyPath != "" {
 		client, err := client.NewClientWithOpts(client.WithTLSClientConfig(config.caPath, config.certPath, config.keyPath),
 			client.WithHost(config.endpoint),
-			client.WithVersion(config.apiVersion))
+			client.WithVersion(config.engineVersion))
 
 		if err != nil {
 			panic(err)
@@ -59,7 +59,7 @@ func NewDocker(config *ClientConfig) *Docker {
 		return &Docker{client}
 	}
 
-	client, err := client.NewClientWithOpts(client.WithHost(config.endpoint), client.WithVersion(config.apiVersion))
+	client, err := client.NewClientWithOpts(client.WithHost(config.endpoint), client.WithVersion(config.engineVersion))
 	if err != nil {
 		panic(err)
 	}

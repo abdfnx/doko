@@ -8,6 +8,7 @@ import (
 
 	"github.com/abdfnx/doko/log"
 	"github.com/abdfnx/doko/core"
+	"github.com/abdfnx/doko/tools"
 	"github.com/abdfnx/doko/docker"
 	"github.com/abdfnx/doko/core/opts"
 	"github.com/abdfnx/doko/cmd/factory"
@@ -20,17 +21,19 @@ import (
 )
 
 var dokoOpts = &opts.Options{
-	Endpoint: "",
-	CertPath: "",
-	KeyPath:  "",
-	CaPath:   "",
-	ApiVersion: "",
-	LogFilePath: "",
-	LogLevelPath: "",
+	Endpoint:      "",
+	CertPath:      "",
+	KeyPath:       "",
+	CaPath:        "",
+	EngineVersion: "",
+	LogFilePath:   "",
+	LogLevelPath:  "",
 }
 
 // Execute start the CLI
 func Execute(f *factory.Factory, version string, buildDate string) *cobra.Command {
+	tools.CheckDotDoko()
+
 	const desc = `🐳 docker you know but with console user interface.`
 
 	// Root command
@@ -46,8 +49,8 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 			# With specific endpoint
 			doko --endpoint <DOCKER_ENDPOINT>
 
-			# Use another docker api version
-			doko --api "1.39"
+			# Use another docker engine version
+			doko --engine "1.40"
 
 			# Log file path
 			doko --log-file /home/doko/my-log.log
@@ -78,15 +81,15 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 				tview.Borders.BottomRightFocus = '+'
 			}
 
-			logger.NewLogger(string(dokoOpts.LogLevelPath), string(dokoOpts.LogFilePath))
+			logger.NewLogger(dokoOpts.LogLevelPath, dokoOpts.LogFilePath)
 
 			docker.NewDocker(
 				docker.NewClientConfig(
-					string(dokoOpts.Endpoint),
-					string(dokoOpts.CertPath),
-					string(dokoOpts.KeyPath),
-					string(dokoOpts.CaPath),
-					string(dokoOpts.ApiVersion),
+					dokoOpts.Endpoint,
+					dokoOpts.CertPath,
+					dokoOpts.KeyPath,
+					dokoOpts.CaPath,
+					dokoOpts.EngineVersion,
 				),
 			)
 
@@ -97,7 +100,7 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 
 			ui := core.New()
 
-			if err := ui.Start(); err != nil {
+			if err := ui.Start(version); err != nil {
 				logger.Logger.Errorf("cannot start `doko`: %s", err)
 				return err
 			}
@@ -137,7 +140,7 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 	rootCmd.Flags().StringVarP(&dokoOpts.CertPath, "cert", "c", "", "The path to the TLS certificate (cert.pem)")
 	rootCmd.Flags().StringVarP(&dokoOpts.KeyPath, "key", "k", "", "The path to the TLS key (key.pem)")
 	rootCmd.Flags().StringVarP(&dokoOpts.CaPath, "ca", "", "", "The path to the TLS CA (ca.pem)")
-	rootCmd.Flags().StringVarP(&dokoOpts.ApiVersion, "api", "a", "1.41", "The docker api version")
+	rootCmd.Flags().StringVarP(&dokoOpts.EngineVersion, "engine", "g", "1.41", "The docker engine version")
 	rootCmd.Flags().StringVarP(&dokoOpts.LogFilePath, "log-file", "l", "", "The path to the log file")
 	rootCmd.Flags().StringVarP(&dokoOpts.LogLevelPath, "log-level", "o", "info", "The log level")
 

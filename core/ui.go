@@ -1,12 +1,16 @@
 package core
 
 import (
+	"fmt"
 	"context"
 
+	"github.com/abdfnx/doko/core/api"
 	"github.com/abdfnx/doko/log"
 	"github.com/abdfnx/doko/shared"
+	"github.com/abdfnx/doko/tools"
 
 	"github.com/rivo/tview"
+	"github.com/tidwall/gjson"
 )
 
 type panels struct {
@@ -214,12 +218,76 @@ func (ui *UI) stopMonitoring() {
 }
 
 // Start start application
-func (ui *UI) Start() error {
+func (ui *UI) Start(version string) error {
 	ui.initPanels()
 	ui.startMonitoring()
-	if err := ui.app.Run(); err != nil {
-		ui.app.Stop()
-		return err
+
+	updatePage := tview.NewPages()
+	updateText := tview.NewTextView().
+		SetDynamicColors(true).
+		SetRegions(true).
+		SetChangedFunc(func() {
+			ui.app.Draw()
+		})
+
+	update := `
+		How to update Doko?
+
+		first quit from Doko, then:
+
+		1. if you install it from script, then run the script again to update
+		2. if you install it from homebrew, then run 'brew upgrade doko' to update
+		3. do you install doko from go install, run 'go get -u github.com/abdfnx/doko' to update
+	`
+
+	fmt.Fprintf(updateText, "%s ", update)
+
+	updatePage.AddAndSwitchToPage("update", tview.NewGrid().
+		SetRows(3, 0, 3).
+		SetColumns(30, 0, 30).
+		SetBorders(true).
+		AddItem(updateText, 1, 1, 1, 1, 0, 0, false), true).
+	ShowPage("main")
+
+	newReleaseModal := tview.NewModal()
+
+	enableMouse := gjson.Get(tools.SettingsContent(), "dk_settings.enable_mouse").Bool()
+
+	if enableMouse {
+		ui.app.EnableMouse(true)
+	}
+
+	if version != api.GetLatest() && gjson.Get(tools.SettingsContent(), "dk_settings.show_update").Bool() != false {
+		newReleaseModal.SetText("There's a new version of doko is avalaible: " + version + " → " + api.GetLatest()).
+			AddButtons([]string{"How to Update ?", "Don't show again", "Cancel"}).
+			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+				if buttonLabel == "How to Update ?" {
+					ui.app.SetRoot(updatePage, true).SetFocus(updatePage)
+				} else if buttonLabel == "Don't show again" {
+					tools.UpdateSettings(false, enableMouse)
+					ui.app.SetRoot(ui.pages, true).SetFocus(ui.imagePanel())
+				} else if buttonLabel == "Cancel" {
+					ui.app.SetRoot(ui.pages, true).SetFocus(ui.imagePanel())
+				}
+			})
+
+		if err := ui.app.SetRoot(newReleaseModal, true).SetFocus(newReleaseModal).Run(); err != nil {
+			ui.app.Stop()
+			return err
+		}
+	} else {
+		newReleaseModal.SetText("All good, you're using the latest version of doko 👊").
+			AddButtons([]string{"Ok"}).
+			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+				if buttonLabel == "Ok" {
+					ui.app.SetRoot(ui.pages, true).SetFocus(ui.imagePanel())
+				}
+			})
+
+		if err := ui.app.Run(); err != nil {
+			ui.app.Stop()
+			return err
+		}
 	}
 
 	return nil

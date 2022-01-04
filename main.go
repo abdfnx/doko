@@ -9,6 +9,7 @@ import (
 	"github.com/abdfnx/doko/tools"
 	"github.com/abdfnx/doko/cmd/doko"
 	"github.com/abdfnx/doko/cmd/factory"
+	"github.com/abdfnx/doko/core/checker"
 
 	"github.com/AlecAivazis/survey/v2/terminal"
 	surveyCore "github.com/AlecAivazis/survey/v2/core"
@@ -84,6 +85,10 @@ func mainRun() exitCode {
 
 	if doko.HasFailed() {
 		return exitError
+	}
+
+	if len(os.Args) > 1 && os.Args[1] != "doko" {
+		checker.Check(version)
 	}
 
 	return exitOK
