@@ -5,6 +5,7 @@ import (
 	"time"
 	"strings"
 
+	"github.com/abdfnx/doko/log"
 	"github.com/abdfnx/doko/shared"
 	"github.com/abdfnx/doko/docker"
 
@@ -67,7 +68,7 @@ func (n *networks) entries(ui *UI) {
 	networks, err := docker.Client.Networks(types.NetworkListOptions{})
 
 	if err != nil {
-		shared.Logger.Error(err)
+		logger.Logger.Error(err)
 		return
 	}
 
@@ -84,7 +85,7 @@ func (n *networks) entries(ui *UI) {
 		net, err := docker.Client.InspectNetwork(net.ID)
 
 		if err != nil {
-			shared.Logger.Error(err)
+			logger.Logger.Error(err)
 			continue
 		}
 
@@ -182,7 +183,7 @@ func (n *networks) setFilterWord(word string) {
 }
 
 func (n *networks) monitoringNetworks(ui *UI) {
-	shared.Logger.Info("start monitoring networks")
+	logger.Logger.Info("start monitoring networks")
 	ticker := time.NewTicker(5 * time.Second)
 
 LOOP:
@@ -196,5 +197,5 @@ LOOP:
 		}
 	}
 
-	shared.Logger.Info("stop monitoring networks")
+	logger.Logger.Info("stop monitoring networks")
 }

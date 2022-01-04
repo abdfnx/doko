@@ -9,6 +9,7 @@ import (
 	"os/signal"
 	"path/filepath"
 
+	"github.com/abdfnx/doko/log"
 	"github.com/abdfnx/doko/docker"
 	"github.com/abdfnx/doko/shared"
 
@@ -105,7 +106,7 @@ func (ui *UI) createContainerForm() {
 	selectedImage := ui.selectedImage()
 
 	if selectedImage == nil {
-		shared.Logger.Error("please input image")
+		logger.Logger.Error("please input image")
 		return
 	}
 
@@ -164,14 +165,14 @@ func (ui *UI) createContainer(form *tview.Form, image string) {
 
 		options, err := docker.Client.NewContainerOptions(data, isAttach)
 		if err != nil {
-			shared.Logger.Errorf("cannot create container %s", err)
+			logger.Logger.Errorf("cannot create container %s", err)
 			return err
 		}
 
 		err = docker.Client.CreateContainer(options)
 
 		if err != nil {
-			shared.Logger.Errorf("cannot create container %s", err)
+			logger.Logger.Errorf("cannot create container %s", err)
 			return err
 		}
 
@@ -206,7 +207,7 @@ func (ui *UI) pullImage(image, closePanel, switchPanel string) {
 		ui.closeAndSwitchPanel(closePanel, switchPanel)
 		err := docker.Client.PullImage(image)
 		if err != nil {
-			shared.Logger.Errorf("cannot pull an image %s", err)
+			logger.Logger.Errorf("cannot pull an image %s", err)
 			return err
 		}
 
@@ -239,7 +240,7 @@ func (ui *UI) inspectImage() {
 	inspect, err := docker.Client.InspectImage(image.ID)
 
 	if err != nil {
-		shared.Logger.Errorf("cannot inspect image %s", err)
+		logger.Logger.Errorf("cannot inspect image %s", err)
 		return
 	}
 
@@ -270,13 +271,13 @@ func (ui *UI) renameContainer(newName, closePanel, switchPanel string) {
 
 		if oldContainer == nil {
 			err := errors.New("specified container is nil")
-			shared.Logger.Errorf("cannot rename container %s", err)
+			logger.Logger.Errorf("cannot rename container %s", err)
 			return err
 		}
 
 		err := docker.Client.RenameContainer(oldContainer.ID, newName)
 		if err != nil {
-			shared.Logger.Errorf("cannot create container %s", err)
+			logger.Logger.Errorf("cannot create container %s", err)
 			return err
 		}
 
@@ -291,7 +292,7 @@ func (ui *UI) inspectContainer() {
 
 	inspect, err := docker.Client.InspectContainer(container.ID)
 	if err != nil {
-		shared.Logger.Errorf("cannot inspect container %s", err)
+		logger.Logger.Errorf("cannot inspect container %s", err)
 		return
 	}
 
@@ -304,7 +305,7 @@ func (ui *UI) inspectVolume() {
 	inspect, err := docker.Client.InspectVolume(volume.Name)
 
 	if err != nil {
-		shared.Logger.Errorf("cannot inspect volume %s", err)
+		logger.Logger.Errorf("cannot inspect volume %s", err)
 		return
 	}
 
@@ -316,7 +317,7 @@ func (ui *UI) inspectNetwork() {
 
 	inspect, err := docker.Client.InspectNetwork(network.ID)
 	if err != nil {
-		shared.Logger.Errorf("cannot inspect network %s", err)
+		logger.Logger.Errorf("cannot inspect network %s", err)
 		return
 	}
 
@@ -329,7 +330,7 @@ func (ui *UI) removeImage() {
 	ui.confirm("Do you want to remove the image?", "Done", "images", func() {
 		ui.startTask(fmt.Sprintf("remove image %s:%s", image.Repo, image.Tag), func(ctx context.Context) error {
 			if err := docker.Client.RemoveImage(image.ID); err != nil {
-				shared.Logger.Errorf("cannot remove the image %s", err)
+				logger.Logger.Errorf("cannot remove the image %s", err)
 				return err
 			}
 			ui.imagePanel().updateEntries(ui)
@@ -344,7 +345,7 @@ func (ui *UI) removeContainer() {
 	ui.confirm("Do you want to remove the container?", "Done", "containers", func() {
 		ui.startTask(fmt.Sprintf("remove container %s", container.Name), func(ctx context.Context) error {
 			if err := docker.Client.RemoveContainer(container.ID); err != nil {
-				shared.Logger.Errorf("cannot remove the container %s", err)
+				logger.Logger.Errorf("cannot remove the container %s", err)
 				return err
 			}
 			ui.containerPanel().updateEntries(ui)
@@ -359,7 +360,7 @@ func (ui *UI) removeVolume() {
 	ui.confirm("Do you want to remove the volume?", "Done", "volumes", func() {
 		ui.startTask(fmt.Sprintf("remove volume %s", volume.Name), func(ctx context.Context) error {
 			if err := docker.Client.RemoveVolume(volume.Name); err != nil {
-				shared.Logger.Errorf("cannot remove the volume %s", err)
+				logger.Logger.Errorf("cannot remove the volume %s", err)
 				return err
 			}
 			ui.volumePanel().updateEntries(ui)
@@ -374,7 +375,7 @@ func (ui *UI) removeNetwork() {
 	ui.confirm("Do you want to remove the network?", "Done", "networks", func() {
 		ui.startTask(fmt.Sprintf("remove network %s", network.Name), func(ctx context.Context) error {
 			if err := docker.Client.RemoveNetwork(network.ID); err != nil {
-				shared.Logger.Errorf("cannot remove the network %s", err)
+				logger.Logger.Errorf("cannot remove the network %s", err)
 				return err
 			}
 
@@ -389,7 +390,7 @@ func (ui *UI) startContainer() {
 
 	ui.startTask(fmt.Sprintf("start container %s", container.Name), func(ctx context.Context) error {
 		if err := docker.Client.StartContainer(container.ID); err != nil {
-			shared.Logger.Errorf("cannot start container %s", err)
+			logger.Logger.Errorf("cannot start container %s", err)
 			return err
 		}
 
@@ -404,7 +405,7 @@ func (ui *UI) stopContainer() {
 	ui.startTask(fmt.Sprintf("stop container %s", container.Name), func(ctx context.Context) error {
 
 		if err := docker.Client.StopContainer(container.ID); err != nil {
-			shared.Logger.Errorf("cannot stop container %s", err)
+			logger.Logger.Errorf("cannot stop container %s", err)
 			return err
 		}
 
@@ -441,7 +442,7 @@ func (ui *UI) exportContainer(path, container string) {
 		ui.closeAndSwitchPanel("form", "containers")
 		err := docker.Client.ExportContainer(container, path)
 		if err != nil {
-			shared.Logger.Errorf("cannot export container %s", err)
+			logger.Logger.Errorf("cannot export container %s", err)
 			return err
 		}
 
@@ -470,7 +471,7 @@ func (ui *UI) loadImage(path string) {
 	ui.startTask("load image "+filepath.Base(path), func(ctx context.Context) error {
 		ui.closeAndSwitchPanel("form", "images")
 		if err := docker.Client.LoadImage(path); err != nil {
-			shared.Logger.Errorf("cannot load image %s", err)
+			logger.Logger.Errorf("cannot load image %s", err)
 			return err
 		}
 
@@ -505,7 +506,7 @@ func (ui *UI) importImage(file, repo, tag string) {
 		ui.closeAndSwitchPanel("form", "images")
 
 		if err := docker.Client.ImportImage(repo, tag, file); err != nil {
-			shared.Logger.Errorf("cannot load image %s", err)
+			logger.Logger.Errorf("cannot load image %s", err)
 			return err
 		}
 
@@ -542,7 +543,7 @@ func (ui *UI) saveImage(image, path string) {
 		ui.closeAndSwitchPanel("form", "images")
 
 		if err := docker.Client.SaveImage([]string{image}, path); err != nil {
-			shared.Logger.Errorf("cannot save image %s", err)
+			logger.Logger.Errorf("cannot save image %s", err)
 			return err
 		}
 
@@ -579,7 +580,7 @@ func (ui *UI) commitContainer(repo, tag, container string) {
 		ui.closeAndSwitchPanel("form", "containers")
 
 		if err := docker.Client.CommitContainer(container, types.ContainerCommitOptions{Reference: repo + ":" + tag}); err != nil {
-			shared.Logger.Errorf("cannot commit container %s", err)
+			logger.Logger.Errorf("cannot commit container %s", err)
 			return err
 		}
 
@@ -611,12 +612,12 @@ func (ui *UI) attachContainer(container, cmd string) {
 	if !ui.app.Suspend(func() {
 		ui.stopMonitoring()
 		if err := docker.Client.AttachExecContainer(container, cmd); err != nil {
-			shared.Logger.Errorf("cannot attach container %s", err)
+			logger.Logger.Errorf("cannot attach container %s", err)
 		}
 
 		ui.startMonitoring()
 	}) {
-		shared.Logger.Error("cannot suspend tview")
+		logger.Logger.Error("cannot suspend tview")
 	}
 }
 
@@ -656,7 +657,7 @@ func (ui *UI) createVolume(form *tview.Form) {
 		options := docker.Client.NewCreateVolumeOptions(data)
 
 		if err := docker.Client.CreateVolume(options); err != nil {
-			shared.Logger.Errorf("cannot create volume %s", err)
+			logger.Logger.Errorf("cannot create volume %s", err)
 			return err
 		}
 
@@ -674,7 +675,7 @@ func (ui *UI) tailContainerLog() {
 	container := ui.selectedContainer()
 
 	if container == nil {
-		shared.Logger.Errorf("cannot start tail container: selected container is null")
+		logger.Logger.Errorf("cannot start tail container: selected container is null")
 		return
 	}
 
@@ -689,7 +690,7 @@ func (ui *UI) tailContainerLog() {
 		go func() {
 			reader, err = docker.Client.ContainerLogStream(container.ID)
 			if err != nil {
-				shared.Logger.Error(err)
+				logger.Logger.Error(err)
 				errCh <- err
 			}
 
@@ -697,7 +698,7 @@ func (ui *UI) tailContainerLog() {
 
 			_, err = stdcopy.StdCopy(os.Stdout, os.Stderr, reader)
 			if err != nil {
-				shared.Logger.Error(err)
+				logger.Logger.Error(err)
 				errCh <- err
 			}
 
@@ -706,7 +707,7 @@ func (ui *UI) tailContainerLog() {
 
 		select {
 			case err := <-errCh:
-				shared.Logger.Error(err)
+				logger.Logger.Error(err)
 				reader.Close()
 				return
 			case <-sigint:
@@ -714,7 +715,7 @@ func (ui *UI) tailContainerLog() {
 				return
 		}
 	}) {
-		shared.Logger.Error("cannot suspend tview")
+		logger.Logger.Error("cannot suspend tview")
 	}
 }
 
@@ -722,14 +723,14 @@ func (ui *UI) killContainer() {
 	container := ui.selectedContainer()
 
 	if container == nil {
-		shared.Logger.Errorf("cannot kill container: selected container is null")
+		logger.Logger.Errorf("cannot kill container: selected container is null")
 		return
 	}
 
 	ui.confirm("Do you want to kill the container?", "Done", "containers", func() {
 		ui.startTask(fmt.Sprintf("kill container %s", container.Name), func(ctx context.Context) error {
 			if err := docker.Client.KillContainer(container.ID); err != nil {
-				shared.Logger.Errorf("cannot kill the container %s", err)
+				logger.Logger.Errorf("cannot kill the container %s", err)
 				return err
 			}
 

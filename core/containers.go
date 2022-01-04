@@ -4,6 +4,7 @@ import (
 	"time"
 	"strings"
 
+	"github.com/abdfnx/doko/log"
 	"github.com/abdfnx/doko/shared"
 	"github.com/abdfnx/doko/docker"
 
@@ -82,7 +83,7 @@ func (c *containers) entries(ui *UI) {
 	containers, err := docker.Client.Containers(types.ContainerListOptions{All: true})
 
 	if err != nil {
-		shared.Logger.Error(err)
+		logger.Logger.Error(err)
 		return
 	}
 
@@ -181,7 +182,7 @@ func (c *containers) setFilterWord(word string) {
 }
 
 func (c *containers) monitoringContainers(ui *UI) {
-	shared.Logger.Info("start monitoring containers")
+	logger.Logger.Info("start monitoring containers")
 	ticker := time.NewTicker(5 * time.Second)
 
 LOOP:
@@ -195,5 +196,5 @@ LOOP:
 		}
 	}
 
-	shared.Logger.Info("stop monitoring containers")
+	logger.Logger.Info("stop monitoring containers")
 }

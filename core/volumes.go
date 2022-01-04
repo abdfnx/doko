@@ -4,11 +4,12 @@ import (
 	"time"
 	"strings"
 
-	"github.com/rivo/tview"
-	"github.com/gdamore/tcell/v2"
-
+	"github.com/abdfnx/doko/log"
 	"github.com/abdfnx/doko/shared"
 	"github.com/abdfnx/doko/docker"
+
+	"github.com/rivo/tview"
+	"github.com/gdamore/tcell/v2"
 )
 
 
@@ -67,7 +68,7 @@ func (v *volumes) setKeybinding(ui *UI) {
 func (v *volumes) entries(ui *UI) {
 	volumes, err := docker.Client.Volumes()
 	if err != nil {
-		shared.Logger.Error(err)
+		logger.Logger.Error(err)
 		return
 	}
 
@@ -161,7 +162,7 @@ func (v *volumes) setFilterWord(word string) {
 }
 
 func (v *volumes) monitoringVolumes(ui *UI) {
-	shared.Logger.Info("start monitoring volumes")
+	logger.Logger.Info("start monitoring volumes")
 	ticker := time.NewTicker(5 * time.Second)
 
 LOOP:
@@ -175,5 +176,5 @@ LOOP:
 		}
 	}
 
-	shared.Logger.Info("stop monitoring volumes")
+	logger.Logger.Info("stop monitoring volumes")
 }

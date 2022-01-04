@@ -3,6 +3,7 @@ package core
 import (
 	"context"
 
+	"github.com/abdfnx/doko/log"
 	"github.com/abdfnx/doko/shared"
 
 	"github.com/rivo/tview"
@@ -99,7 +100,7 @@ func (ui *UI) taskPanel() *tasks {
 }
 
 func (ui *UI) monitoringTask() {
-	shared.Logger.Info("start monitoring task")
+	logger.Logger.Info("start monitoring task")
 LOOP:
 	for {
 		select {
@@ -115,7 +116,7 @@ LOOP:
 				}()
 
 			case <-ui.state.stopChans["task"]:
-				shared.Logger.Info("stop monitoring task")
+				logger.Logger.Info("stop monitoring task")
 				break LOOP
 			}
 	}

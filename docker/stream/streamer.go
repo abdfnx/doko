@@ -9,7 +9,6 @@ import (
 	"errors"
 	"context"
 
-	"github.com/abdfnx/doko/shared"
 	logger "github.com/abdfnx/doko/log"
 
 	"github.com/docker/docker/pkg/term"
@@ -68,14 +67,14 @@ func (s *Streamer) resizeTTY(ctx context.Context, resize ResizeContainer, id str
 }
 
 func (s *Streamer) initTTYSize(ctx context.Context, resize ResizeContainer, id string) {
-	if err := s.resizeTty(ctx, resize, id); err != nil {
+	if err := s.resizeTTY(ctx, resize, id); err != nil {
 		go func() {
-			shared.Logger.Errorf("failed to resize tty: (%s)\n", err)
+			logger.Logger.Errorf("failed to resize tty: (%s)\n", err)
 
 			for retry := 0; retry < 5; retry++ {
 				time.Sleep(10 * time.Millisecond)
 
-				if err = s.resizeTty(ctx, resize, id); err == nil {
+				if err = s.resizeTTY(ctx, resize, id); err == nil {
 					break
 				}
 			}
@@ -102,12 +101,12 @@ func (s *Streamer) streamIn(restore func(), resp types.HijackedResponse) <-chan 
 		}
 
 		if err != nil {
-			shared.Logger.Errorf("in stream error: %s", err)
+			logger.Logger.Errorf("in stream error: %s", err)
 			return
 		}
 
 		if err := resp.CloseWrite(); err != nil {
-			shared.Logger.Errorf("close response error: %s", err)
+			logger.Logger.Errorf("close response error: %s", err)
 		}
 	}()
 
@@ -123,7 +122,7 @@ func (s *Streamer) streamOut(restore func(), resp types.HijackedResponse) <-chan
 		restore()
 
 		if err != nil {
-			shared.Logger.Errorf("output stream error: %s", err)
+			logger.Logger.Errorf("output stream error: %s", err)
 			return
 		}
 
@@ -162,4 +161,28 @@ func (s *Streamer) stream(ctx context.Context, resp types.HijackedResponse) erro
 		case <-ctx.Done():
 			return ctx.Err()
 	}
+}
+
+func (s *Streamer) Stream(ctx context.Context, id string, resp types.HijackedResponse, resize ResizeContainer) (err error) {
+	if id == "" {
+		return ErrEmptyExecID
+	}
+
+	errCh := make(chan error, 1)
+
+	go func() {
+		defer close(errCh)
+		errCh <- s.stream(ctx, resp)
+	}()
+
+	if s.In.IsTerminal {
+		s.monitorTtySize(ctx, resize, id)
+	}
+
+	if err := <-errCh; err != nil {
+		logger.Logger.Errorf("stream error: %s", err)
+		return err
+	}
+
+	return nil
 }

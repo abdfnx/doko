@@ -3,6 +3,8 @@ module github.com/abdfnx/doko
 go 1.17
 
 require (
+	github.com/AlecAivazis/survey/v2 v2.3.2
+	github.com/MakeNowJust/heredoc v1.0.0
 	github.com/Timothee-Cardoso/tc-exe v1.0.1
 	github.com/briandowns/spinner v1.18.0
 	github.com/docker/docker v20.10.12+incompatible
@@ -11,12 +13,16 @@ require (
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
 	github.com/mattn/go-colorable v0.1.2
 	github.com/mattn/go-isatty v0.0.13
+	github.com/mattn/go-runewidth v0.0.13
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
+	github.com/muesli/reflow v0.3.0
 	github.com/muesli/termenv v0.9.0
 	github.com/rivo/tview v0.0.0-20211202162923-2a6de950f73b
 	github.com/sirupsen/logrus v1.8.1
+	github.com/spf13/cobra v1.0.0
+	github.com/spf13/pflag v1.0.5
 	golang.org/x/sys v0.0.0-20210616094352-59db8d763f22
-	golang.org/x/term v0.0.0-20210220032956-6a3ed077a48d
+	golang.org/x/term v0.0.0-20210503060354-a79de5458b56
 )
 
 require (
@@ -30,8 +36,8 @@ require (
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
+	github.com/inconshreveable/mousetrap v1.0.0 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect
-	github.com/mattn/go-runewidth v0.0.13 // indirect
 	github.com/moby/term v0.0.0-20210619224110-3f7ff695adc6 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect

@@ -76,7 +76,7 @@ func (t *tasks) setEntries(ui *UI) {
 		})
 	}
 
-	for i, task := range ui.state.dockerResources.tasks {
+	for i, task := range ui.state.resources.tasks {
 		table.SetCell(i+1, 0, tview.NewTableCell(task.Name).
 			SetTextColor(tcell.ColorLightGreen).
 			SetMaxWidth(1).

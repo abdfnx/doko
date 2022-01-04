@@ -4,6 +4,7 @@ import (
 	"time"
 	"strings"
 
+	"github.com/abdfnx/doko/log"
 	"github.com/abdfnx/doko/shared"
 	"github.com/abdfnx/doko/docker"
 
@@ -173,7 +174,7 @@ func (i *images) setFilterWord(word string) {
 }
 
 func (i *images) monitoringImages(ui *UI) {
-	shared.Logger.Info("start monitoring images")
+	logger.Logger.Info("start monitoring images")
 	ticker := time.NewTicker(5 * time.Second)
 
 LOOP:
@@ -187,5 +188,5 @@ LOOP:
 		}
 	}
 
-	shared.Logger.Info("stop monitoring images")
+	logger.Logger.Info("stop monitoring images")
 }

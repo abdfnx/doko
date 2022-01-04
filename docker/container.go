@@ -6,6 +6,7 @@ import (
 	"context"
 	"strings"
 
+	"github.com/abdfnx/doko/log"
 	"github.com/abdfnx/doko/shared"
 	"github.com/abdfnx/doko/docker/stream"
 
@@ -37,7 +38,7 @@ func (d *Docker) InspectContainer(name string) (types.ContainerJSON, error) {
 
 // CreateContainer create container
 func (d *Docker) CreateContainer(opt CreateContainerOptions) error {
-	_, err := d.ContainerCreate(context.TODO(), opt.Config, opt.HostConfig, opt.NetworkConfig, opt.Name)
+	_, err := d.ContainerCreate(context.TODO(), opt.Config, opt.HostConfig, opt.NetworkConfig, nil, opt.Name)
 	return err
 }
 
@@ -91,7 +92,7 @@ func (d *Docker) NewContainerOptions(config map[string]string, isAttach bool) (C
 
 	if env := config["Env"]; env != "" {
 		for _, v := range strings.Split(env, ",") {
-			v = shared.GetOSenv(v)
+			v = shared.GetEnv(v)
 			options.Config.Env = append(options.Config.Env, v)
 		}
 	}
@@ -191,7 +192,7 @@ func (d *Docker) AttachExecContainer(id, cmd string) error {
 	exec, err := d.CreateExec(id, cmd)
 
 	if err != nil {
-		shared.Logger.Error(err)
+		logger.Logger.Error(err)
 		return err
 	}
 
@@ -199,7 +200,7 @@ func (d *Docker) AttachExecContainer(id, cmd string) error {
 
 	resp, err := d.ContainerExecAttach(ctx, exec.ID, types.ExecStartCheck{Tty: true})
 	if err != nil {
-		shared.Logger.Error(err)
+		logger.Logger.Error(err)
 		return err
 	}
 
