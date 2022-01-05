@@ -11,7 +11,7 @@ env:
 
 jobs:
   # Doko Container Docker Image `dokocli/doko`
-  rs_container_build:
+  dk_container_build:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,7 +26,7 @@ jobs:
       - name: Build Doko Container
         run: make brcwc
 
-  rs_container_run:
+  dk_container_run:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,8 +36,8 @@ jobs:
         run: docker run --rm -iv /var/run/docker.sock:/var/run/docker.sock $DK_CONTAINER -h
 
   # Doko Full Container Docker Image `dokocli/doko-full`
-  rs_full_container_build:
-    needs: [ rs_container_build, rs_container_run]
+  dk_full_container_build:
+    needs: [ dk_container_build, dk_container_run]
 
     runs-on: ubuntu-latest
 

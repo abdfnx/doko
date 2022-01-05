@@ -18,9 +18,10 @@ bfrc: # build full doko container
 		@docker build -t dokocli/doko-full --file ./docker/doko-full/Dockerfile . && \
 		docker push dokocli/doko-full
 
-bfrc: # build full doko container
-		@docker build -t dokocli/doko-full --file ./docker/doko-full/Dockerfile . && \
-		docker push dokocli/doko-full
+brcwc: # build doko container with cache
+		@docker pull dokocli/doko:latest && \
+		docker build -t dokocli/doko --cache-from dokocli/doko:latest . && \
+		docker push dokocli/doko
 
 bfrcwc: # build full doko container with cache
 		@docker pull dokocli/doko-full:latest && \
