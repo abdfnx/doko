@@ -33,7 +33,7 @@ func newTasks(ui *UI) *tasks {
 		tasks: make(chan *task),
 	}
 
-	tasks.SetTitle("docker tasks").SetTitleAlign(tview.AlignLeft)
+	tasks.SetTitle("your docker tasks").SetTitleAlign(tview.AlignLeft)
 	tasks.SetBorder(true)
 	tasks.setEntries(ui)
 	tasks.setKeybinding(ui)

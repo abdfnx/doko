@@ -82,10 +82,10 @@ func newInfo() *info {
 }
 
 func (i *info) display() {
-	dockerEngine := fmt.Sprintf("engine version:%s", i.Docker.APIVersion)
-	dockerVersion := fmt.Sprintf("server version:%s", i.Docker.ServerVersion)
-	dockerEndpoint := fmt.Sprintf("endpoint:%s", i.Docker.Endpoint)
+	dockerEngine := fmt.Sprintf("engine version: %s", i.Docker.APIVersion)
+	dockerVersion := fmt.Sprintf("server version: %s", i.Docker.ServerVersion)
+	dockerEndpoint := fmt.Sprintf("endpoint: %s", i.Docker.Endpoint)
 
 	i.SetTextColor(tcell.ColorYellow)
-	i.SetText(fmt.Sprintf(" docker\t| %s %s %s", dockerEngine, dockerVersion, dockerEndpoint))
+	i.SetText(fmt.Sprintf(" doko | %s | %s | %s", dockerEngine, dockerVersion, dockerEndpoint))
 }
