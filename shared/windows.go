@@ -10,11 +10,6 @@ import (
 
 var kernel32 = syscall.NewLazyDLL("kernel32.dll")
 
-import (
-	"syscall"
-	"unsafe"
-)
-
 const (
 	rightAltPressed  = 1
 	leftAltPressed   = 2
@@ -42,8 +37,6 @@ const (
 	mouseEvent            = 0x2
 	windowBufferSizeEvent = 0x4
 )
-
-var kernel32 = syscall.NewLazyDLL("kernel32.dll")
 
 var (
 	procAllocConsole                = kernel32.NewProc("AllocConsole")
