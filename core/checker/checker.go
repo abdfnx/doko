@@ -37,7 +37,7 @@ func Check(buildVersion string) {
 		return ""
 	}
 
-	if buildVersion != latestVersion && gjson.Get(tools.SettingsContent(), "rs_settings.show_update").String() != "false" {
+	if buildVersion != latestVersion && gjson.Get(tools.SettingsContent(), "dk_settings.show_update").String() != "false" {
 		fmt.Fprintf(stderr, "%s %s → %s\n",
 		ansi.Color("There's a new version of ", "yellow") + ansi.Color("doko", "cyan") + ansi.Color(" is avalaible:", "yellow"),
 		ansi.Color(buildVersion, "cyan"),
