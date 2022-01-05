@@ -5,6 +5,7 @@
 *.so
 *.dylib
 /doko
+date.txt
 
 # Test binary, built with `go test -c`
 *.test
