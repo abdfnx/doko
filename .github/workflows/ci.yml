@@ -1,0 +1,144 @@
+name: Doko CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  GITHUB_TOKEN: ${{ github.token }}
+  ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+jobs:
+  bfs: # build from source
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+
+    - name: Building From Source
+      run: |
+        go mod tidy
+        go run ./scripts/date.go >> date.txt
+        go build -ldflags "-X main.version=$(git describe --abbrev=0 --tags) -X main.buildDate=$(cat date.txt)" -o doko
+
+    - run: ./doko help
+
+  bfs_windows: # build from source (windows)
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+
+    - name: Building From Source
+      run: |
+        .\scripts\build.ps1
+        echo "::add-path::C:\Users\runneradmin\AppData\Local\doko\bin\;"
+
+    - run: doko help
+
+  from_script:
+    needs: [ bfs ]
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install from script
+      run: curl -sL https://git.io/doko | bash
+
+  from_script_windows:
+    needs: [ bfs_windows ]
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install from script
+      run: |
+        iwr -useb https://git.io/doko-win | iex
+        echo "::add-path::C:\Users\runneradmin\AppData\Local\doko\bin\;"
+
+    - name: Test it
+      run: doko settings help
+
+  go:
+    needs: [ bfs, bfs_windows ]
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+
+    - name: Install from Go
+      run: go install github.com/abdfnx/doko@latest
+
+    - name: Install `deno` from doko
+      run: doko settings set enable_mouse false
+
+  snapshot:
+    needs: [ bfs, bfs_windows, go ]
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17
+
+      - name: Set up `GoReleaser`
+        uses: goreleaser/goreleaser-action@v2
+        with:
+          install-only: true
+
+      - name: Set up `Date`
+        run: go run ./scripts/date.go >> date.txt
+
+      - name: Build
+        run: BuildDate="$(cat date.txt)" goreleaser release --snapshot --rm-dist --timeout 100m
+
+  homebrew:
+    needs: [ bfs, snapshot ]
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Get Doko via homebrew
+      run: brew install abdfnx/tap/doko
+
+    - name: Run `doko help`
+      run: doko help
+
+  via_docker:
+    needs: [ bfs, from_script, go ]
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Run in docker container
+      run: docker run -itv /var/run/docker.sock:/var/run/docker.sock dokocli/doko settings
