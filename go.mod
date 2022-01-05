@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.2
 	github.com/MakeNowJust/heredoc v1.0.0
-	github.com/Timothee-Cardoso/tc-exe v1.0.1
+	github.com/abdfnx/looker v0.1.0
 	github.com/abdfnx/resto v0.1.6
 	github.com/briandowns/spinner v1.18.0
 	github.com/docker/docker v20.10.12+incompatible

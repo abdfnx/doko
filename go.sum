@@ -94,8 +94,9 @@ github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAE
 github.com/PuerkitoBio/purell v1.1.1/go.mod h1:c11w/QuzBsJSee3cPx9rAFu61PvFxuPbtSwDGJws/X0=
 github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578/go.mod h1:uGdkoq3SwY9Y+13GIhn11/XLaGBb4BfwItxLd5jeuXE=
 github.com/Shopify/logrus-bugsnag v0.0.0-20171204204709-577dee27f20d/go.mod h1:HI8ITrYtUY+O+ZhtlqUnD8+KwNPOyugEhfP9fdUIaEQ=
-github.com/Timothee-Cardoso/tc-exe v1.0.1 h1:jb51E+XF3P5gxthbRgfCGiwXv9uVX6VnPivD6TkACyM=
 github.com/Timothee-Cardoso/tc-exe v1.0.1/go.mod h1:dq8JjfgZPLtVNCSxRckj9GPhjaCm7IifIyqmkUgwAiM=
+github.com/abdfnx/looker v0.1.0 h1:tMN7E0wKIgbydAPPQ1RkppJ1bGHn+B+y9PZy7mwa+3U=
+github.com/abdfnx/looker v0.1.0/go.mod h1:QVfPHnredPBUg4R+MtEkZbMBbqrgtoaj0JHO3KYkvyE=
 github.com/abdfnx/resto v0.1.6 h1:yOM9O9bpMP4lb2ox0U7/gcFXO78P5eUZBxWuKrfdrFA=
 github.com/abdfnx/resto v0.1.6/go.mod h1:7+/dYHN1Zw70GKAOtT+76LG9ZnMqA9NTbUFFgEt7rsk=
 github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc/go.mod h1:LOuyumcjzFXgccqObfd/Ljyb9UuFJ6TxHnclSeseNhc=

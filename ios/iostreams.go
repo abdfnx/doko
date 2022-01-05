@@ -14,11 +14,11 @@ import (
 
 	"golang.org/x/term"
 	"github.com/google/shlex"
+	"github.com/abdfnx/looker"
 	"github.com/muesli/termenv"
 	"github.com/mattn/go-isatty"
 	"github.com/briandowns/spinner"
 	"github.com/mattn/go-colorable"
-	tcexe "github.com/Timothee-Cardoso/tc-exe"
 )
 
 const DefaultWidth = 80
@@ -190,7 +190,7 @@ func (s *IOStreams) StartPager() error {
 		pagerEnv = append(pagerEnv, "LV=-c")
 	}
 
-	pagerExe, err := tcexe.LookPath(pagerArgs[0])
+	pagerExe, err := looker.LookPath(pagerArgs[0])
 
 	if err != nil {
 		return err
@@ -279,7 +279,7 @@ func (s *IOStreams) TerminalWidth() int {
 	}
 
 	if isCygwinTerminal(out) {
-		tputExe, err := tcexe.LookPath("tput")
+		tputExe, err := looker.LookPath("tput")
 		if err != nil {
 			return defaultWidth
 		}
