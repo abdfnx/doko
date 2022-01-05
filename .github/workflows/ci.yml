@@ -73,7 +73,7 @@ jobs:
         echo "::add-path::C:\Users\runneradmin\AppData\Local\doko\bin\;"
 
     - name: Test it
-      run: doko settings help
+      run: doko settings
 
   go:
     needs: [ bfs, bfs_windows ]
@@ -141,4 +141,4 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Run in docker container
-      run: docker run -itv /var/run/docker.sock:/var/run/docker.sock dokocli/doko settings
+      run: docker run --rm -iv /var/run/docker.sock:/var/run/docker.sock dokocli/doko settings
