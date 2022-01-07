@@ -4,6 +4,8 @@
 
 > 🐳 docker you know but with console user interface.
 
+![preview](https://user-images.githubusercontent.com/64256993/148515590-dccda7c1-73ea-45c6-80b6-901633861fde.gif)
+
 this app is inspired from [lazydocker](https://github.com/jesseduffield/lazydocker)
 
 ## Installation
