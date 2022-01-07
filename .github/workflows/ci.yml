@@ -48,7 +48,7 @@ jobs:
         echo "::add-path::C:\Users\runneradmin\AppData\Local\doko\bin\;"
 
     - name: Run Help
-      run: ./doko help
+      run: doko help
 
   from_script:
     needs: [ bfs ]
