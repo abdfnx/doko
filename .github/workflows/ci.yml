@@ -28,7 +28,8 @@ jobs:
         go run ./scripts/date.go >> date.txt
         go build -ldflags "-X main.version=$(git describe --abbrev=0 --tags) -X main.buildDate=$(cat date.txt)" -o doko
 
-    - run: ./doko help
+    - name: Run Help
+      run: ./doko help
 
   bfs_windows: # build from source (windows)
     runs-on: windows-latest
@@ -46,7 +47,8 @@ jobs:
         .\scripts\build.ps1
         echo "::add-path::C:\Users\runneradmin\AppData\Local\doko\bin\;"
 
-    - run: doko help
+    - name: Run Help
+      run: ./doko help
 
   from_script:
     needs: [ bfs ]
@@ -91,7 +93,7 @@ jobs:
     - name: Install from Go
       run: go install github.com/abdfnx/doko@latest
 
-    - name: Install `deno` from doko
+    - name: Update settings
       run: doko settings set enable_mouse false
 
   snapshot:
