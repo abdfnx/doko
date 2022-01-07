@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./.github/assets/logo.svg" height="120px" />
+  <img src="https://raw.githubusercontent.com/abdfnx/doko/main/.github/assets/logo.svg" height="120px" />
 </p>
 
 > 🐳 docker you know but with console user interface.
@@ -70,8 +70,9 @@ doko
 doko --endpoint <DOCKER_ENDPOINT>
 ```
 
+- Use another docker engine version
+
 ```
-* Use another docker engine version
 doko --engine "1.40"
 ```
 
