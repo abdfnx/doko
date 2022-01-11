@@ -4,8 +4,6 @@ dist
 # doko files
 *.exe
 *.exe~
-doko
 
 # dependency directories
 vendor
-

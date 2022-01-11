@@ -35,7 +35,7 @@ var dokoOpts = &opts.Options{
 func Execute(f *factory.Factory, version string, buildDate string) *cobra.Command {
 	tools.CheckDotDoko()
 
-	const desc = `🐳 docker you know but with console user interface.`
+	const desc = `🐳 docker you know but with TUI.`
 
 	// Root command
 	var rootCmd = &cobra.Command{
