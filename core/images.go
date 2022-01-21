@@ -62,7 +62,7 @@ func (i *images) setKeybinding(ui *UI) {
 			case 'p':
 				ui.pullImageForm()
 			case 'd':
-				ui.removeImage()
+				ui.deleteImage()
 			case 'i':
 				ui.importImageForm()
 			case 's':

@@ -57,7 +57,7 @@ func (n *networks) setKeybinding(ui *UI) {
 
 		switch event.Rune() {
 			case 'd':
-				ui.removeNetwork()
+				ui.deleteNetwork()
 		}
 
 		return event

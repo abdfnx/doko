@@ -16,7 +16,7 @@ func (d *Docker) InspectNetwork(name string) (types.NetworkResource, error) {
 	return d.NetworkInspect(context.TODO(), name, types.NetworkInspectOptions{})
 }
 
-// RemoveNetwork remove network
-func (d *Docker) RemoveNetwork(name string) error {
+// DeleteNetwork -> delete network
+func (d *Docker) DeleteNetwork(name string) error {
 	return d.NetworkRemove(context.TODO(), name)
 }

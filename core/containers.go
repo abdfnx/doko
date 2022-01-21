@@ -62,7 +62,7 @@ func (c *containers) setKeybinding(ui *UI) {
 
 		switch event.Rune() {
 			case 'd':
-				ui.removeContainer()
+				ui.deleteContainer()
 			case 'r':
 				ui.renameContainerForm()
 			case 't':

@@ -324,13 +324,13 @@ func (ui *UI) inspectNetwork() {
 	ui.displayInspect(shared.StructToJSON(inspect), "networks")
 }
 
-func (ui *UI) removeImage() {
+func (ui *UI) deleteImage() {
 	image := ui.selectedImage()
 
-	ui.confirm("Do you want to remove the image?", "Done", "images", func() {
-		ui.startTask(fmt.Sprintf("remove image %s:%s", image.Repo, image.Tag), func(ctx context.Context) error {
-			if err := docker.Client.RemoveImage(image.ID); err != nil {
-				logger.Logger.Errorf("cannot remove the image %s", err)
+	ui.confirm("Do you want to delete the image?", "Done", "images", func() {
+		ui.startTask(fmt.Sprintf("delete image %s:%s", image.Repo, image.Tag), func(ctx context.Context) error {
+			if err := docker.Client.DeleteImage(image.ID); err != nil {
+				logger.Logger.Errorf("cannot delete the image %s", err)
 				return err
 			}
 			ui.imagePanel().updateEntries(ui)
@@ -339,13 +339,13 @@ func (ui *UI) removeImage() {
 	})
 }
 
-func (ui *UI) removeContainer() {
+func (ui *UI) deleteContainer() {
 	container := ui.selectedContainer()
 
-	ui.confirm("Do you want to remove the container?", "Done", "containers", func() {
-		ui.startTask(fmt.Sprintf("remove container %s", container.Name), func(ctx context.Context) error {
-			if err := docker.Client.RemoveContainer(container.ID); err != nil {
-				logger.Logger.Errorf("cannot remove the container %s", err)
+	ui.confirm("Do you want to delete the container?", "Done", "containers", func() {
+		ui.startTask(fmt.Sprintf("delete container %s", container.Name), func(ctx context.Context) error {
+			if err := docker.Client.DeleteContainer(container.ID); err != nil {
+				logger.Logger.Errorf("cannot delete the container %s", err)
 				return err
 			}
 			ui.containerPanel().updateEntries(ui)
@@ -354,13 +354,13 @@ func (ui *UI) removeContainer() {
 	})
 }
 
-func (ui *UI) removeVolume() {
+func (ui *UI) deleteVolume() {
 	volume := ui.selectedVolume()
 
-	ui.confirm("Do you want to remove the volume?", "Done", "volumes", func() {
-		ui.startTask(fmt.Sprintf("remove volume %s", volume.Name), func(ctx context.Context) error {
-			if err := docker.Client.RemoveVolume(volume.Name); err != nil {
-				logger.Logger.Errorf("cannot remove the volume %s", err)
+	ui.confirm("Do you want to delete the volume?", "Done", "volumes", func() {
+		ui.startTask(fmt.Sprintf("delete volume %s", volume.Name), func(ctx context.Context) error {
+			if err := docker.Client.DeleteVolume(volume.Name); err != nil {
+				logger.Logger.Errorf("cannot delete the volume %s", err)
 				return err
 			}
 			ui.volumePanel().updateEntries(ui)
@@ -369,13 +369,13 @@ func (ui *UI) removeVolume() {
 	})
 }
 
-func (ui *UI) removeNetwork() {
+func (ui *UI) deleteNetwork() {
 	network := ui.selectedNetwork()
 
-	ui.confirm("Do you want to remove the network?", "Done", "networks", func() {
-		ui.startTask(fmt.Sprintf("remove network %s", network.Name), func(ctx context.Context) error {
-			if err := docker.Client.RemoveNetwork(network.ID); err != nil {
-				logger.Logger.Errorf("cannot remove the network %s", err)
+	ui.confirm("Do you want to delete the network?", "Done", "networks", func() {
+		ui.startTask(fmt.Sprintf("delete network %s", network.Name), func(ctx context.Context) error {
+			if err := docker.Client.DeleteNetwork(network.ID); err != nil {
+				logger.Logger.Errorf("cannot delete the network %s", err)
 				return err
 			}
 

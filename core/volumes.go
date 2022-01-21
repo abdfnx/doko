@@ -56,7 +56,7 @@ func (v *volumes) setKeybinding(ui *UI) {
 
 		switch event.Rune() {
 			case 'd':
-				ui.removeVolume()
+				ui.deleteVolume()
 			case 'c':
 				ui.createVolumeForm()
 		}

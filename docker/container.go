@@ -128,8 +128,8 @@ func (d *Docker) CommitContainer(name string, opt types.ContainerCommitOptions) 
 	return err
 }
 
-// RemoveContainer remove container
-func (d *Docker) RemoveContainer(name string) error {
+// DeleteContainer delete container
+func (d *Docker) DeleteContainer(name string) error {
 	return d.ContainerRemove(context.TODO(), name, types.ContainerRemoveOptions{})
 }
 

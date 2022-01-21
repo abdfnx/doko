@@ -27,8 +27,8 @@ func (d *Docker) InspectVolume(name string) (types.Volume, error) {
 	return volume, err
 }
 
-// RemoveVolume -> remove volume
-func (d *Docker) RemoveVolume(name string) error {
+// DeleteVolume -> remove volume
+func (d *Docker) DeleteVolume(name string) error {
 	return d.VolumeRemove(context.TODO(), name, false)
 }
 

@@ -41,15 +41,15 @@ func (d *Docker) PullImage(name string) error {
 	return nil
 }
 
-// RemoveImage -> remove image
-func (d *Docker) RemoveImage(name string) error {
+// DeleteImage -> delete image
+func (d *Docker) DeleteImage(name string) error {
 	_, err := d.ImageRemove(context.TODO(), name, types.ImageRemoveOptions{})
 
 	return err
 }
 
-// RemoveDanglingImages remove dangling images
-func (d *Docker) RemoveDanglingImages() error {
+// DeleteDanglingImages delete dangling images
+func (d *Docker) DeleteDanglingImages() error {
 	opt := types.ImageListOptions{
 		Filters: filters.NewArgs(filters.Arg("dangling", "true")),
 	}
@@ -63,13 +63,13 @@ func (d *Docker) RemoveDanglingImages() error {
 	errIDs := []string{}
 
 	for _, image := range images {
-		if err := d.RemoveImage(image.ID); err != nil {
+		if err := d.DeleteImage(image.ID); err != nil {
 			errIDs = append(errIDs, image.ID[7:19])
 		}
 	}
 
 	if len(errIDs) > 1 {
-		return fmt.Errorf("can not remove ids\n%s", errIDs)
+		return fmt.Errorf("can not delete ids\n%s", errIDs)
 	}
 
 	return nil
