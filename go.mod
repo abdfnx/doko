@@ -18,7 +18,7 @@ require (
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/muesli/reflow v0.3.0
-	github.com/muesli/termenv v0.10.0
+	github.com/muesli/termenv v0.11.0
 	github.com/rivo/tview v0.0.0-20220106183741-90d72bc664f5
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.3.0
