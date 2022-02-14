@@ -2,7 +2,7 @@
   <img src="https://raw.githubusercontent.com/abdfnx/doko/main/.github/assets/logo.svg" height="120px" />
 </p>
 
-> 🐳 docker you know but with TUI.
+> 🐳 The docker you know but with TUI.
 
 ![preview](https://user-images.githubusercontent.com/64256993/148515590-dccda7c1-73ea-45c6-80b6-901633861fde.gif)
 
