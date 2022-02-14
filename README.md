@@ -26,7 +26,7 @@ iwr -useb https://git.io/doko-win | iex
 
 #### or with [**resto**](https://github.com/abdfnx/resto)
 
-```bash
+```sh
 # shell
 resto install https://git.io/doko
 
@@ -34,11 +34,11 @@ resto install https://git.io/doko
 resto install https://git.io/doko-win
 ```
 
-**then restart your powershell**
+**then close and open your**
 
 ### Go package manager
 
-```bash
+```sh
 go install github.com/abdfnx/doko@latest
 ```
 
@@ -60,25 +60,25 @@ docker run -itv /var/run/docker.sock:/var/run/docker.sock dokocli/doko-full
 
 - Open Doko UI
 
-```bash
+```sh
 doko
 ```
 
 - With specific endpoint
 
-```
+```sh
 doko --endpoint <DOCKER_ENDPOINT>
 ```
 
 - Use another docker engine version
 
-```
+```sh
 doko --engine "1.40"
 ```
 
 - Log file path
 
-```
+```sh
 doko --log-file /home/doko/my-log.log
 ```
 
