@@ -21,7 +21,7 @@ require (
 	github.com/muesli/termenv v0.11.0
 	github.com/rivo/tview v0.0.0-20220106183741-90d72bc664f5
 	github.com/sirupsen/logrus v1.8.1
-	github.com/spf13/cobra v1.3.0
+	github.com/spf13/cobra v1.4.0
 	github.com/spf13/pflag v1.0.5
 	github.com/tidwall/gjson v1.14.0
 	github.com/tidwall/pretty v1.2.0
