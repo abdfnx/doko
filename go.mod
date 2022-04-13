@@ -1,6 +1,6 @@
 module github.com/abdfnx/doko
 
-go 1.17
+go 1.18
 
 require (
 	github.com/AlecAivazis/survey/v2 v2.3.4
@@ -33,8 +33,8 @@ require (
 require (
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
 	github.com/Microsoft/go-winio v0.5.1 // indirect
-	github.com/containerd/containerd v1.5.9 // indirect
-	github.com/docker/distribution v2.7.1+incompatible // indirect
+	github.com/containerd/containerd v1.5.10 // indirect
+	github.com/docker/distribution v2.8.1+incompatible // indirect
 	github.com/docker/go-units v0.4.0 // indirect
 	github.com/fatih/color v1.13.0 // indirect
 	github.com/gdamore/encoding v1.0.0 // indirect
