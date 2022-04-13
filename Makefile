@@ -4,7 +4,7 @@ TAG=$(shell git describe --abbrev=0 --tags)
 DATE=$(shell go run ./scripts/date.go)
 
 build:
-		@go mod tidy -compat=1.17 && \
+		@go mod tidy -compat=1.8 && \
 		go build -ldflags "-X main.version=$(TAG) -X main.buildDate=$(DATE)" -o doko
 
 install: doko
