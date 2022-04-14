@@ -1,0 +1,51 @@
+# https://taskfile.dev
+
+version: "3"
+
+vars:
+  DOKO_UNIX_PATH: /usr/local/bin
+
+tasks:
+  default:
+    cmds:
+      - task: build
+
+  setup:
+    cmds:
+      - if [ -f "date.txt" ]; then rm date.txt; fi
+      - if [ -f "tag.txt" ]; then rm tag.txt; fi
+      - go run ./scripts/date.go >> date.txt
+      - git describe --abbrev=0 --tags >> tag.txt
+
+  remove:
+    cmds:
+      - sudo rm -rf "{{ .DOKO_UNIX_PATH }}"/doko
+
+  install:
+    cmds:
+      - sudo mv doko "{{ .DOKO_UNIX_PATH }}"
+
+  release:
+    cmds:
+      - BuildDate="$(cat date.txt)" goreleaser release --rm-dist --timeout 100m
+
+  build:
+    cmds:
+      - task: setup
+      - go mod tidy
+      - go build -ldflags "-X main.version=$(cat tag.txt) -X main.buildDate=$(cat date.txt)" -o doko
+
+  build-docker:
+    cmds:
+      - task: build-docker-cli
+
+  build-docker-cli:
+    cmds:
+      - docker build -t dokocli/doko .
+      - docker push dokocli/doko
+
+  build-docker-full:
+    dir: ./docker/doko-full
+    cmds:
+      - docker build -t dokocli/doko-full .
+      - docker push dokocli/doko-full

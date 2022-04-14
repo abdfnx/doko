@@ -10,7 +10,7 @@ release:
 
 before:
   hooks:
-    - go mod tidy -compat=1.18
+    - go mod tidy
 
 builds:
   - <<: &build_defaults

@@ -6,8 +6,8 @@ import (
 	"os"
 	"runtime"
 
-	"github.com/abdfnx/doko/cli"
-	"github.com/abdfnx/doko/cmd/factory"
+	"github.com/abdfnx/doko/cli/commands"
+	"github.com/abdfnx/doko/cli/factory"
 	"github.com/abdfnx/doko/core"
 	"github.com/abdfnx/doko/core/opts"
 	"github.com/abdfnx/doko/docker"
@@ -134,7 +134,7 @@ func Execute(f *factory.Factory, version string, buildDate string) *cobra.Comman
 	rootCmd.SetFlagErrorFunc(rootFlagErrorFunc)
 
 	// add `versionCmd` to root command
-	rootCmd.AddCommand(cli.SettingsCMD(), versionCmd)
+	rootCmd.AddCommand(commands.SettingsCMD(), versionCmd)
 
 	// add flags
 	rootCmd.Flags().StringVarP(&dokoOpts.Endpoint, "endpoint", "e", client.DefaultDockerHost, "The docker endpoint to use")

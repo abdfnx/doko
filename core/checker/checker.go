@@ -6,7 +6,7 @@ import (
 
 	"github.com/abdfnx/doko/tools"
 	"github.com/abdfnx/doko/core/api"
-	"github.com/abdfnx/doko/cmd/factory"
+	"github.com/abdfnx/doko/cli/factory"
 
 	"github.com/mgutz/ansi"
 	"github.com/tidwall/gjson"

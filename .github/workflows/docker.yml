@@ -24,7 +24,10 @@ jobs:
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
       - name: Build Doko Container
-        run: make brcwc
+        run: |
+          docker pull $DK_CONTAINER:latest
+          docker build -t $DK_CONTAINER --cache-from $DK_CONTAINER:latest .
+          docker push $DK_CONTAINER
 
   dk_container_run:
     runs-on: ubuntu-latest
@@ -51,4 +54,7 @@ jobs:
           password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
 
       - name: Build Doko Full Container
-        run: make bfrcwc
+        run: |
+          docker pull $DK_FULL_CONTAINER:latest
+          docker build -t $DK_FULL_CONTAINER --cache-from $DK_FULL_CONTAINER:latest .
+          docker push $DK_FULL_CONTAINER

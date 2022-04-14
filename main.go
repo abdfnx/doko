@@ -7,8 +7,8 @@ import (
 	"runtime"
 
 	"github.com/abdfnx/doko/tools"
-	"github.com/abdfnx/doko/cmd/doko"
-	"github.com/abdfnx/doko/cmd/factory"
+	"github.com/abdfnx/doko/cli/doko"
+	"github.com/abdfnx/doko/cli/factory"
 	"github.com/abdfnx/doko/core/checker"
 
 	"github.com/AlecAivazis/survey/v2/terminal"
