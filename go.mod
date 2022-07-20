@@ -6,7 +6,7 @@ require (
 	github.com/AlecAivazis/survey/v2 v2.3.5
 	github.com/MakeNowJust/heredoc v1.0.0
 	github.com/abdfnx/looker v0.1.0
-	github.com/abdfnx/resto v0.1.6
+	github.com/abdfnx/resto v0.1.1
 	github.com/briandowns/spinner v1.18.1
 	github.com/docker/docker v20.10.17+incompatible
 	github.com/docker/go-connections v0.4.0
@@ -20,13 +20,13 @@ require (
 	github.com/muesli/reflow v0.3.0
 	github.com/muesli/termenv v0.12.0
 	github.com/rivo/tview v0.0.0-20220106183741-90d72bc664f5
-	github.com/sirupsen/logrus v1.8.1
+	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/pflag v1.0.5
 	github.com/tidwall/gjson v1.14.1
 	github.com/tidwall/pretty v1.2.0
 	github.com/tidwall/sjson v1.2.4
-	golang.org/x/sys v0.0.0-20220422013727-9388b58f7150
+	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211
 )
 
@@ -47,7 +47,6 @@ require (
 	github.com/opencontainers/image-spec v1.0.2 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rivo/uniseg v0.2.0 // indirect
-	github.com/stretchr/testify v1.7.0 // indirect
 	github.com/tidwall/match v1.1.1 // indirect
 	golang.org/x/net v0.0.0-20220105145211-5b0dc2dfae98 // indirect
 	golang.org/x/text v0.3.7 // indirect
