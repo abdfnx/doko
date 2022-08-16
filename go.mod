@@ -13,7 +13,7 @@ require (
 	github.com/gdamore/tcell/v2 v2.4.1-0.20210905002822-f057f0a857a1
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510
 	github.com/mattn/go-colorable v0.1.12
-	github.com/mattn/go-isatty v0.0.14
+	github.com/mattn/go-isatty v0.0.16
 	github.com/mattn/go-runewidth v0.0.13
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
 	github.com/mitchellh/go-homedir v1.1.0
@@ -26,7 +26,7 @@ require (
 	github.com/tidwall/gjson v1.14.2
 	github.com/tidwall/pretty v1.2.0
 	github.com/tidwall/sjson v1.2.5
-	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8
+	golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab
 	golang.org/x/term v0.0.0-20210927222741-03fcf44c2211
 )
 
