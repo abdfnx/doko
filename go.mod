@@ -18,7 +18,7 @@ require (
 	github.com/mgutz/ansi v0.0.0-20200706080929-d51e80ef957d
 	github.com/mitchellh/go-homedir v1.1.0
 	github.com/muesli/reflow v0.3.0
-	github.com/muesli/termenv v0.12.0
+	github.com/muesli/termenv v0.13.0
 	github.com/rivo/tview v0.0.0-20220106183741-90d72bc664f5
 	github.com/sirupsen/logrus v1.9.0
 	github.com/spf13/cobra v1.5.0
@@ -33,6 +33,7 @@ require (
 require (
 	github.com/Azure/go-ansiterm v0.0.0-20210617225240-d185dfc1b5a1 // indirect
 	github.com/Microsoft/go-winio v0.5.1 // indirect
+	github.com/aymanbagabas/go-osc52 v1.0.3 // indirect
 	github.com/docker/distribution v2.8.1+incompatible // indirect
 	github.com/docker/go-units v0.4.0 // indirect
 	github.com/fatih/color v1.13.0 // indirect
