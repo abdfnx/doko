@@ -26,8 +26,8 @@ require (
 	github.com/tidwall/gjson v1.14.4
 	github.com/tidwall/pretty v1.2.1
 	github.com/tidwall/sjson v1.2.5
-	golang.org/x/sys v0.0.0-20220811171246-fbc7d0a398ab
-	golang.org/x/term v0.1.0
+	golang.org/x/sys v0.3.0
+	golang.org/x/term v0.3.0
 )
 
 require (
